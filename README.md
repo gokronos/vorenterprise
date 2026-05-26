@@ -38,3 +38,47 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 This directory contains example API routes for the headless API app.
 
 For more details, see [route.js file convention](https://nextjs.org/docs/app/api-reference/file-conventions/route).
+
+## SAGRILAFT Admin Dashboard
+
+This project now includes:
+
+- Public PDF viewers for:
+	- `/sagrilaft`
+	- `/organigrama`
+	- `/politica-datos`
+- Internal dashboard at `/admin` to update all compliance PDFs.
+- User management with roles (`admin`, `editor`) from dashboard.
+- SQLite database persistence (users + SAGRILAFT settings).
+
+### 1) Configure admin credentials
+
+Create a `.env.local` file based on `.env.example`:
+
+```bash
+DATABASE_PATH=data/vorenterprise.db
+ADMIN_USER=admin
+ADMIN_PASSWORD=admin12345
+ADMIN_SESSION_SECRET=change-this-secret
+```
+
+At first startup, the app bootstraps:
+
+- `admin_users` table (and inserts first admin user from env)
+- `compliance_documents` table (default docs for SAGRILAFT, Organigrama, Politica de Datos)
+
+### 2) Login to dashboard
+
+- Open `/admin/login`
+- Authenticate with your configured credentials
+- Update title, description, and PDF URL from the dashboard
+
+### 3) PDF source
+
+- You can use a local file URL like `/documentos/sagrilaft.pdf`
+- Or an external PDF URL
+
+### 4) Roles
+
+- `admin`: can create users and update documents.
+- `editor`: can update documents.

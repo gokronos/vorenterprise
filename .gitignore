@@ -19,6 +19,10 @@
 
 # production
 /build
+*.tar
+*.tar.gz
+*.tgz
+*.zip
 
 # misc
 .DS_Store
@@ -38,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local deployment tooling
+/scripts/

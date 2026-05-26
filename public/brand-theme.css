@@ -1,0 +1,78 @@
+/**
+ * V.O.R. Enterprise — paleta oficial (override en producción sin rebuild).
+ * Fondo #040814 | Contenedores #0F172A | Acento #00F0FF | Títulos #FFF | Cuerpo #E2E8F0
+ */
+:root {
+	--color-bg-screen: #040814 !important;
+	--color-bg-container: #0f172a !important;
+	--color-accent: #00f0ff !important;
+	--color-text-title: #ffffff !important;
+	--color-text-body: #e2e8f0 !important;
+	--bg-deep: #040814 !important;
+	--bg-panel: #0f172a !important;
+	--bg-card: #0f172a !important;
+	--cyan: #00f0ff !important;
+	--cyan-soft: #00f0ff !important;
+	--text: #ffffff !important;
+	--text-muted: #e2e8f0 !important;
+	--line: rgba(0, 240, 255, 0.32) !important;
+}
+
+.site-body {
+	color: #e2e8f0 !important;
+	background: #040814 !important;
+	background: radial-gradient(circle at 18% 6%, #0f172a 0%, #040814 48%, #040814 100%) !important;
+}
+
+.site-body h1,
+.site-body h2,
+.site-body h3,
+.site-body h4,
+.site-body h5,
+.site-body h6,
+.menu-brand-text strong,
+.hero-title,
+.section-title,
+.identity-card h3,
+.portfolio-card h3,
+.legal-copy h2,
+.kyc-panel h2,
+.faq-item summary,
+.compliance-doc-header h1 {
+	color: #ffffff !important;
+}
+
+.main-menu {
+	background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9)) !important;
+	border-bottom-color: rgba(0, 240, 255, 0.32) !important;
+}
+
+.identity-card,
+.portfolio-card,
+.why-card,
+.legal-block,
+.kyc-panel,
+.faq-section,
+.compliance-shell,
+.site-footer {
+	background: #0f172a !important;
+	border-color: rgba(0, 240, 255, 0.28) !important;
+}
+
+.menu-nav a:hover,
+.site-footer-nav a:hover,
+.site-footer-contact a:hover {
+	color: #00f0ff !important;
+}
+
+.legal-cta,
+.hero-cta,
+.kyc-submit,
+.admin-login-btn {
+	color: #040814 !important;
+	background: linear-gradient(90deg, #00f0ff 0%, #00d4e6 100%) !important;
+}
+
+.legal-copy h2::after {
+	background: linear-gradient(90deg, #00f0ff 0%, rgba(0, 240, 255, 0.45) 100%) !important;
+}
