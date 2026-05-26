@@ -74,8 +74,8 @@ body {
 }
 
 .menu-brand-logo {
-	width: 86px;
-	height: 86px;
+	width: 96px;
+	height: 96px;
 	object-fit: contain;
 	flex: 0 0 auto;
 	filter: drop-shadow(0 8px 20px rgba(0, 240, 255, 0.2));
@@ -854,8 +854,8 @@ body {
 }
 
 .site-footer-brand-logo {
-	width: 104px;
-	height: 104px;
+	width: 122px;
+	height: 122px;
 	object-fit: contain;
 	flex: 0 0 auto;
 	filter: drop-shadow(0 10px 24px rgba(0, 240, 255, 0.14));
@@ -1675,8 +1675,8 @@ body {
 	}
 
 	.menu-brand-logo {
-		width: 72px;
-		height: 72px;
+		width: 80px;
+		height: 80px;
 	}
 
 	.menu-toggle {
@@ -1878,8 +1878,8 @@ body {
 	}
 
 	.menu-brand-logo {
-		width: 64px;
-		height: 64px;
+		width: 72px;
+		height: 72px;
 	}
 
 	.menu-link {
@@ -2023,8 +2023,8 @@ body {
 	}
 
 	.site-footer-brand-logo {
-		width: 72px;
-		height: 72px;
+		width: 88px;
+		height: 88px;
 	}
 
 	.site-footer-brand p {
