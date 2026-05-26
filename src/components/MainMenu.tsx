@@ -7,7 +7,6 @@ import { useState } from 'react';
 const menuItems = [
   { label: 'Home', href: '/' },
   { label: 'Sagrilaft', href: '/sagrilaft' },
-  { label: 'Organigrama', href: '/organigrama' },
   { label: 'Política de Datos', href: '/politica-datos' },
   { label: 'Preguntas Frecuentes', href: '/preguntas-frecuentes' },
   { label: 'KYC', href: '/kyc' },

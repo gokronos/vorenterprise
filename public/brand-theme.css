@@ -76,3 +76,8 @@
 .legal-copy h2::after {
 	background: linear-gradient(90deg, #00f0ff 0%, rgba(0, 240, 255, 0.45) 100%) !important;
 }
+
+/* Hotfix de navegación: Organigrama ya no se usa */
+.menu-nav a[href='/organigrama'] {
+	display: none !important;
+}
