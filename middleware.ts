@@ -24,13 +24,6 @@ function buildCsp(allowFraming: boolean) {
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const hasVersionParam = request.nextUrl.searchParams.has('v');
-
-  if (pathname === '/' && !hasVersionParam) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.searchParams.set('v', '1779774109');
-    return NextResponse.redirect(redirectUrl, 308);
-  }
 
   const response = NextResponse.next();
   const mode = request.nextUrl.searchParams.get('mode');
