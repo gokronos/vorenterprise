@@ -1,0 +1,81 @@
+name: Deploy Hostinger
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production artifacts
+        run: npm run build
+
+      - name: Install deploy tools
+        run: sudo apt-get update && sudo apt-get install -y sshpass rsync
+
+      - name: Ensure remote folders
+        env:
+          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          APP: /home/u870400083/domains/vorenterprise.com/nodejs
+        run: |
+          sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USER@$HOST" \
+            "mkdir -p '$APP/.next' '$APP/tmp' '$APP/public'"
+
+      - name: Upload .next
+        env:
+          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          APP: /home/u870400083/domains/vorenterprise.com/nodejs
+        run: |
+          sshpass -p "$PASS" rsync -az --delete \
+            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
+            .next/ "$USER@$HOST:$APP/.next/"
+
+      - name: Upload runtime files
+        env:
+          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          APP: /home/u870400083/domains/vorenterprise.com/nodejs
+        run: |
+          sshpass -p "$PASS" rsync -az --delete \
+            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
+            public/ "$USER@$HOST:$APP/public/"
+
+          sshpass -p "$PASS" rsync -az \
+            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
+            package.json package-lock.json next.config.ts middleware.ts postcss.config.js \
+            "$USER@$HOST:$APP/"
+
+      - name: Restart app and verify BUILD_ID
+        env:
+          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          APP: /home/u870400083/domains/vorenterprise.com/nodejs
+        run: |
+          sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USER@$HOST" \
+            "touch '$APP/tmp/restart.txt' && test -f '$APP/.next/BUILD_ID' && cat '$APP/.next/BUILD_ID'"
