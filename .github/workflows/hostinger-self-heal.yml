@@ -1,0 +1,57 @@
+name: Hostinger Self Heal
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: hostinger-self-heal
+  cancel-in-progress: true
+
+jobs:
+  heal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Check public health
+        id: health
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://vorenterprise.com/)
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
+          echo "HTTP status: $STATUS"
+
+      - name: Heal runtime when 5xx
+        if: startsWith(steps.health.outputs.status, '5')
+        env:
+          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          APP: /home/u870400083/domains/vorenterprise.com/nodejs
+        run: |
+          sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USER@$HOST" \
+            "pkill -9 -u '$USER' -f next-server || true; date +%s > '$APP/tmp/restart.txt'"
+
+      - name: Verify recovery
+        if: startsWith(steps.health.outputs.status, '5')
+        run: |
+          OK=0
+          for i in $(seq 1 12); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://vorenterprise.com/)
+            echo "Attempt $i => HTTP $STATUS"
+            if [ "$STATUS" = "200" ]; then
+              OK=1
+              break
+            fi
+            sleep 5
+          done
+
+          if [ "$OK" -ne 1 ]; then
+            echo "Self-heal did not restore HTTP 200 in time"
+            exit 1
+          fi

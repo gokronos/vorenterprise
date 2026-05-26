@@ -78,4 +78,4 @@ jobs:
           APP: /home/u870400083/domains/vorenterprise.com/nodejs
         run: |
           sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USER@$HOST" \
-            "touch '$APP/tmp/restart.txt' && test -f '$APP/.next/BUILD_ID' && cat '$APP/.next/BUILD_ID'"
+            "pkill -9 -u '$USER' -f next-server || true; touch '$APP/tmp/restart.txt'; test -f '$APP/.next/BUILD_ID' && cat '$APP/.next/BUILD_ID'"
