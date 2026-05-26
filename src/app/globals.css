@@ -70,34 +70,15 @@ body {
 .menu-brand {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	gap: 0;
 }
 
 .menu-brand-logo {
-	width: 54px;
-	height: 54px;
+	width: 86px;
+	height: 86px;
 	object-fit: contain;
 	flex: 0 0 auto;
 	filter: drop-shadow(0 8px 20px rgba(0, 240, 255, 0.2));
-}
-
-.menu-brand-text {
-	display: flex;
-	flex-direction: column;
-	line-height: 1.05;
-}
-
-.menu-brand-text strong {
-	font-size: 1.1rem;
-	letter-spacing: 0.11em;
-	font-weight: 900;
-}
-
-.menu-brand-text span {
-	font-size: 0.7rem;
-	letter-spacing: 0.09em;
-	text-transform: uppercase;
-	color: var(--text-muted);
 }
 
 .menu-nav {
@@ -1693,6 +1674,11 @@ body {
 		justify-content: flex-start;
 	}
 
+	.menu-brand-logo {
+		width: 72px;
+		height: 72px;
+	}
+
 	.menu-toggle {
 		display: inline-flex;
 		justify-self: end;
@@ -1891,12 +1877,9 @@ body {
 		padding: 0 14px;
 	}
 
-	.menu-brand-text strong {
-		font-size: 0.98rem;
-	}
-
-	.menu-brand-text span {
-		font-size: 0.62rem;
+	.menu-brand-logo {
+		width: 64px;
+		height: 64px;
 	}
 
 	.menu-link {

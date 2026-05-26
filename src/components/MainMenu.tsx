@@ -29,10 +29,6 @@ export default function MainMenu() {
           alt="Logo V.O.R. Enterprise"
           className="menu-brand-logo"
         />
-        <div className="menu-brand-text">
-          <strong>V.O.R.</strong>
-          <span>Enterprise S.A.S.</span>
-        </div>
       </div>
 
       <button
