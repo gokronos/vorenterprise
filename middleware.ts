@@ -25,6 +25,12 @@ function buildCsp(allowFraming: boolean) {
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
+  if (pathname === '/' && request.nextUrl.searchParams.has('v')) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.searchParams.delete('v');
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
   const response = NextResponse.next();
   const mode = request.nextUrl.searchParams.get('mode');
   const allowFraming =
