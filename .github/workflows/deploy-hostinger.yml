@@ -6,6 +6,10 @@ on:
       - master
   workflow_dispatch:
 
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -40,44 +44,67 @@ jobs:
           APP: /home/u870400083/domains/vorenterprise.com/nodejs
         run: |
           sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USER@$HOST" \
-            "mkdir -p '$APP/.next' '$APP/tmp' '$APP/public'"
+            "mkdir -p '$APP/tmp' '$APP/.deploy-staging'"
 
-      - name: Upload .next
+      - name: Upload staged .next
         env:
           HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
           PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
           USER: ${{ secrets.HOSTINGER_SSH_USER }}
           PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
           APP: /home/u870400083/domains/vorenterprise.com/nodejs
-        run: |
-          sshpass -p "$PASS" rsync -az --delete \
-            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
-            .next/ "$USER@$HOST:$APP/.next/"
-
-      - name: Upload runtime files
-        env:
-          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
-          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
-          USER: ${{ secrets.HOSTINGER_SSH_USER }}
-          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
-          APP: /home/u870400083/domains/vorenterprise.com/nodejs
-        run: |
-          sshpass -p "$PASS" rsync -az --delete \
-            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
-            public/ "$USER@$HOST:$APP/public/"
-
-          sshpass -p "$PASS" rsync -az \
-            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
-            package.json package-lock.json next.config.ts middleware.ts postcss.config.js \
-            "$USER@$HOST:$APP/"
-
-      - name: Restart app and verify BUILD_ID
-        env:
-          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
-          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
-          USER: ${{ secrets.HOSTINGER_SSH_USER }}
-          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
-          APP: /home/u870400083/domains/vorenterprise.com/nodejs
+          RELEASE: /home/u870400083/domains/vorenterprise.com/nodejs/.deploy-staging/${{ github.sha }}
         run: |
           sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USER@$HOST" \
-            "pkill -9 -u '$USER' -f next-server || true; touch '$APP/tmp/restart.txt'; test -f '$APP/.next/BUILD_ID' && cat '$APP/.next/BUILD_ID'"
+            "rm -rf '$RELEASE'; mkdir -p '$RELEASE/.next'"
+
+          sshpass -p "$PASS" rsync -az --delete \
+            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
+            .next/ "$USER@$HOST:$RELEASE/.next/"
+
+      - name: Upload staged runtime files
+        env:
+          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          APP: /home/u870400083/domains/vorenterprise.com/nodejs
+          RELEASE: /home/u870400083/domains/vorenterprise.com/nodejs/.deploy-staging/${{ github.sha }}
+        run: |
+          sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USER@$HOST" \
+            "mkdir -p '$RELEASE/public' '$RELEASE/runtime'"
+
+          sshpass -p "$PASS" rsync -az --delete \
+            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
+            public/ "$USER@$HOST:$RELEASE/public/"
+
+          sshpass -p "$PASS" rsync -az --delete \
+            -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
+            package.json package-lock.json next.config.ts middleware.ts postcss.config.js \
+            "$USER@$HOST:$RELEASE/runtime/"
+
+      - name: Activate staged release and restart
+        env:
+          HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          PASS: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
+          APP: /home/u870400083/domains/vorenterprise.com/nodejs
+          RELEASE: /home/u870400083/domains/vorenterprise.com/nodejs/.deploy-staging/${{ github.sha }}
+        run: |
+          sshpass -p "$PASS" ssh -p "$PORT" -o StrictHostKeyChecking=no "$USER@$HOST" \
+            "set -e; \
+            test -f '$RELEASE/.next/BUILD_ID'; \
+            rm -rf '$APP/.next.next' '$APP/public.next'; \
+            mv '$RELEASE/.next' '$APP/.next.next'; \
+            mv '$RELEASE/public' '$APP/public.next'; \
+            rm -rf '$APP/.next.prev' '$APP/public.prev'; \
+            if [ -d '$APP/.next' ]; then mv '$APP/.next' '$APP/.next.prev'; fi; \
+            if [ -d '$APP/public' ]; then mv '$APP/public' '$APP/public.prev'; fi; \
+            mv '$APP/.next.next' '$APP/.next'; \
+            mv '$APP/public.next' '$APP/public'; \
+            rsync -az --delete '$RELEASE/runtime/' '$APP/'; \
+            pkill -9 -u '$USER' -f next-server || true; \
+            touch '$APP/tmp/restart.txt'; \
+            cat '$APP/.next/BUILD_ID'; \
+            rm -rf '$RELEASE'"
