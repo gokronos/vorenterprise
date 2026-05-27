@@ -18,7 +18,7 @@ export default function HeroSlider() {
       </article>
 
       <figure className="hero-media" aria-hidden="true">
-        <img src="/imagenes/vorEnterprise.png" alt="" className="hero-image" />
+        <img src="/imagenes/vorEnterprise-imagen-1.png" alt="" className="hero-image" />
       </figure>
     </section>
   );
