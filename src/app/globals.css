@@ -786,6 +786,13 @@ body {
 	stroke-width: 1.7;
 }
 
+.why-final-icon img {
+	width: 34px;
+	height: 34px;
+	object-fit: contain;
+	display: block;
+}
+
 .why-final-card h3 {
 	margin: 0 0 10px;
 	font-size: clamp(1rem, 1.5vw, 1.3rem);
