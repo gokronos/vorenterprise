@@ -3,17 +3,11 @@ import { buildAssetUrl } from '../lib/asset-url';
 const year = new Date().getFullYear();
 
 const faqLinks = [
-  { label: 'Ayuda y Soporte', href: '#faq' },
-  { label: 'Seguridad Garantizada', href: '#sagrilaft' },
-  { label: 'Sobre Nosotros', href: '#inicio' },
-  { label: 'Como Funciona', href: '#inicio' },
-  { label: 'Compromiso Seguro', href: '#sagrilaft' },
-];
-
-const departmentLinks = [
-  { label: 'Luna Coworking', href: '#inicio' },
-  { label: 'Bitppi', href: '#inicio' },
-  { label: 'Crypto Luna', href: '#inicio' },
+  { label: 'Ayuda y Soporte', href: '/preguntas-frecuentes' },
+  { label: 'Seguridad Garantizada', href: '/sagrilaft' },
+  { label: 'Sobre Nosotros', href: '/sobre-nosotros' },
+  { label: 'Politica de Datos', href: '/politica-datos' },
+  { label: 'KYC', href: '/kyc' },
 ];
 
 function InstagramIcon() {
@@ -58,17 +52,6 @@ export default function SiteFooter() {
             <h3>Preguntas Frecuentes</h3>
             <ul>
               {faqLinks.map((item) => (
-                <li key={item.label}>
-                  <a href={item.href}>{item.label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav className="site-footer-nav" aria-label="Departamentos">
-            <h3>Departamentos</h3>
-            <ul>
-              {departmentLinks.map((item) => (
                 <li key={item.label}>
                   <a href={item.href}>{item.label}</a>
                 </li>

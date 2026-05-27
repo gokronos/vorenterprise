@@ -7,6 +7,7 @@ import { buildAssetUrl } from '../lib/asset-url';
 
 const menuItems = [
   { label: 'Home', href: '/' },
+  { label: 'Sobre Nosotros', href: '/sobre-nosotros' },
   { label: 'Sagrilaft', href: '/sagrilaft' },
   { label: 'Política de Datos', href: '/politica-datos' },
   { label: 'Preguntas Frecuentes', href: '/preguntas-frecuentes' },
