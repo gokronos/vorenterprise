@@ -1,5 +1,4 @@
 type WhyItem = {
-  pillar: string;
   title: string;
   shortTitle: string;
   text: string;
@@ -8,22 +7,19 @@ type WhyItem = {
 
 const whyItems: WhyItem[] = [
   {
-    pillar: 'Pilar 1: SEGURIDAD',
     title: 'SEGURIDAD',
     shortTitle: '"Blindaje Técnico y Legal"',
     text: 'Garantizamos la custodia de su información y activos con la arquitectura de software avanzada, respaldados por un estricto marco normativo que mitiga los riesgos del entorno digital.',
     icon: 'security',
   },
   {
-    pillar: 'Pilar 2: INFRAESTRUCTURA',
     title: 'INFRAESTRUCTURA',
     shortTitle: '"Plataformas de Ingeniería Avanzada"',
     text: 'Proveemos soluciones de ingeniería transaccional robustas y transparentes, construyendo el entorno digital confiable que el futuro de las finanzas exigen .',
     icon: 'infrastructure',
   },
   {
-    pillar: 'Pilar 3: CUMPLIMIENTO (Compliance)',
-    title: 'CUMPLIMIENTO (Compliance)',
+    title: 'CUMPLIMIENTO',
     shortTitle: '',
     text: 'Nuestra sólida base tecnológica está certificada bajo los altos estándares, asegurando la debida diligencia y transparencia absoluta en cada etapa de su operación.',
     icon: 'compliance',
@@ -67,8 +63,8 @@ export default function WhyChooseUsBlock() {
       <header className="why-final-head">
         <h2>¿Porque Elegir V.O.R ENTERPRISE?</h2>
         <p>
-          Conoce los tres pilares que han permitido ayudar a miles de personas a maximizar sus
-          ganancias
+		  Conoce tres razones clave que han permitido ayudar a miles de personas a maximizar sus
+		  ganancias
         </p>
       </header>
 
@@ -78,7 +74,6 @@ export default function WhyChooseUsBlock() {
             <span className="why-final-icon" aria-hidden="true">
               {renderWhyIcon(item.icon)}
             </span>
-            <p className="why-final-pillar">{item.pillar}</p>
             <h3>{item.shortTitle || item.title}</h3>
             <p>{item.text}</p>
           </article>

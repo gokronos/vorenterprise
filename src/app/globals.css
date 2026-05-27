@@ -768,7 +768,7 @@ body {
 	width: 62px;
 	height: 62px;
 	border-radius: 999px;
-	margin: 0 auto;
+	margin: 0 auto 16px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -787,21 +787,12 @@ body {
 }
 
 .why-final-card h3 {
-	margin: 8px 0 6px;
+	margin: 0 0 10px;
 	font-size: clamp(1rem, 1.5vw, 1.3rem);
 	line-height: 1.15;
 	letter-spacing: 0.01em;
 	color: #00F0FF;
 	text-transform: none;
-}
-
-.why-final-pillar {
-	margin: 10px 0 0;
-	font-size: 0.74rem;
-	font-weight: 800;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	color: rgba(148, 233, 255, 0.9);
 }
 
 .why-final-short {
