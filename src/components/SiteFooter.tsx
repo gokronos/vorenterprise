@@ -1,3 +1,5 @@
+import { buildAssetUrl } from '../lib/asset-url';
+
 const year = new Date().getFullYear();
 
 const faqLinks = [
@@ -39,7 +41,7 @@ export default function SiteFooter() {
         <div className="site-footer-top">
           <section className="site-footer-brand">
             <img
-              src="/imagenes/Logo%20VOR.svg"
+              src={buildAssetUrl('/imagenes/Logo%20VOR.svg')}
               alt="Logo V.O.R. Enterprise"
               className="site-footer-brand-logo"
             />

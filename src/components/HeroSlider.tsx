@@ -1,3 +1,5 @@
+import { buildAssetUrl } from '../lib/asset-url';
+
 export default function HeroSlider() {
   return (
     <section className="hero-slider" aria-label="Banner principal de VOR Enterprise">
@@ -18,7 +20,7 @@ export default function HeroSlider() {
       </article>
 
       <figure className="hero-media" aria-hidden="true">
-        <img src="/imagenes/vorEnterprise-imagen-1.png" alt="" className="hero-image" />
+        <img src={buildAssetUrl('/imagenes/vorEnterprise-imagen-1.png')} alt="" className="hero-image" />
       </figure>
     </section>
   );

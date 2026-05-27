@@ -5,6 +5,7 @@ import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/900.css';
 import MainMenu from '../components/MainMenu';
 import SiteFooter from '../components/SiteFooter';
+import { buildAssetUrl } from '../lib/asset-url';
 
 export const metadata = {
 	title: 'V.O.R. Enterprise S.A.S.',
@@ -15,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="es">
 			<head>
-				<link rel="stylesheet" href="/brand-theme.css" />
+				<link rel="stylesheet" href={buildAssetUrl('/brand-theme.css')} />
 			</head>
 			<body style={{ fontFamily: 'Montserrat, Arial, sans-serif' }} className="site-body">
 				<MainMenu />

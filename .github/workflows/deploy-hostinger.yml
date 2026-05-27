@@ -24,6 +24,8 @@ jobs:
         run: npm install --no-audit --no-fund
 
       - name: Build production artifacts
+        env:
+          NEXT_PUBLIC_ASSET_VERSION: ${{ github.sha }}
         run: npm run build
 
       - name: Install deploy tools

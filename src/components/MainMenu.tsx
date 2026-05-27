@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { buildAssetUrl } from '../lib/asset-url';
 
 const menuItems = [
   { label: 'Home', href: '/' },
@@ -24,7 +25,7 @@ export default function MainMenu() {
     <header className="main-menu">
       <div className="menu-brand">
         <img
-          src="/imagenes/Logo%20VOR.svg"
+          src={buildAssetUrl('/imagenes/Logo%20VOR.svg')}
           alt="Logo V.O.R. Enterprise"
           className="menu-brand-logo"
         />

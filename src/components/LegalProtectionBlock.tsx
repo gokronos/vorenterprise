@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { buildAssetUrl } from '../lib/asset-url';
 
 export default function LegalProtectionBlock() {
   const [open, setOpen] = useState(false);
@@ -67,7 +68,7 @@ export default function LegalProtectionBlock() {
 
             <div className="legal-modal-head">
               <div className="uiaf-seal" aria-hidden="true">
-                <img src="/imagenes/sagrilaft.698ee715.png" alt="Sello UIAF" className="uiaf-seal-image" />
+                <img src={buildAssetUrl('/imagenes/sagrilaft.698ee715.png')} alt="Sello UIAF" className="uiaf-seal-image" />
               </div>
 
               <div>
