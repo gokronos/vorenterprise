@@ -821,10 +821,10 @@ body {
 }
 
 .site-footer {
-	width: 100vw;
+	width: 100%;
 	margin-top: 28px;
-	margin-left: calc(50% - 50vw);
-	margin-right: calc(50% - 50vw);
+	margin-left: 0;
+	margin-right: 0;
 	border-top: 1px solid rgba(0, 240, 255, 0.22);
 	border-bottom: 1px solid rgba(0, 240, 255, 0.22);
 	background:
@@ -1545,7 +1545,7 @@ body {
 
 .hero-slider {
 	display: grid;
-	grid-template-columns: minmax(340px, 1.02fr) minmax(420px, 1.12fr);
+	grid-template-columns: minmax(0, 1.02fr) minmax(0, 1.12fr);
 	align-items: stretch;
 	background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(4, 8, 20, 0.82));
 	position: relative;
@@ -1559,6 +1559,7 @@ body {
 }
 
 .hero-copy {
+	min-width: 0;
 	position: relative;
 	padding: clamp(26px, 4vw, 52px);
 	display: flex;
@@ -1619,6 +1620,7 @@ body {
 
 .hero-media {
 	margin: 0;
+	min-width: 0;
 	position: relative;
 	overflow: hidden;
 	z-index: 1;
